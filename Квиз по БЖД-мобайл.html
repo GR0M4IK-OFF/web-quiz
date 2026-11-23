@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Квиз по БЖД</title>
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14171b" media="(prefers-color-scheme: dark)">
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--tx:#1b1f24;--mu:#5d6773;--ac:#c8421e;--acx:#fff;--ok:#1d7a46;--okb:#e3f4ea;--er:#b3261e;--erb:#fbe7e5;--bd:#dde1e6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171b;--card:#1e2329;--tx:#eceff2;--mu:#9aa5b1;--ac:#ff7a52;--acx:#1b1f24;--ok:#5fd18d;--okb:#17301f;--er:#ff8a80;--erb:#3a1c1a;--bd:#323941;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14171b;--card:#1e2329;--tx:#eceff2;--mu:#9aa5b1;--ac:#ff7a52;--acx:#1b1f24;--ok:#5fd18d;--okb:#17301f;--er:#ff8a80;--erb:#3a1c1a;--bd:#323941;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}body{min-height:100dvh;-webkit-tap-highlight-color:transparent;overflow-wrap:anywhere}
+main{max-width:720px;margin:0 auto;padding:16px 14px 24px}
+button{touch-action:manipulation;-webkit-appearance:none;appearance:none}
+h1{font-size:1.6rem;margin:0 0 4px}h2{font-size:1.2rem;margin:0 0 12px}
+.mu{color:var(--mu);font-size:.92rem}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;margin:14px 0}
+.tabs{display:flex;gap:8px;margin:16px 0}
+.tab,.btn,.opt,.topic{font:inherit;color:inherit;cursor:pointer}
+.tab{flex:1;padding:10px;border-radius:10px;border:1px solid var(--bd);background:var(--card)}
+.tab.on{background:var(--ac);color:var(--acx);border-color:var(--ac);font-weight:600}
+input[type=range]{width:100%;accent-color:var(--ac)}
+.topics{display:grid;gap:8px}
+.topic{text-align:left;padding:12px 14px;border-radius:10px;border:1px solid var(--bd);background:var(--card);display:flex;gap:12px;align-items:center}
+@media(hover:hover){.topic:hover{border-color:var(--ac)}}.topic:active{transform:scale(.99);border-color:var(--ac)}.topic{min-height:56px;font-size:1rem;line-height:1.3}.topic b{min-width:26px;height:26px;border-radius:50%;background:var(--ac);color:var(--acx);display:grid;place-items:center;font-size:.85rem}
+.btn{padding:12px 20px;border-radius:10px;border:0;background:var(--ac);color:var(--acx);font-weight:600}
+.btn.sec{background:transparent;color:var(--tx);border:1px solid var(--bd)}
+.bar{height:6px;background:var(--bd);border-radius:3px;overflow:hidden;margin:8px 0 16px}.bar i{display:block;height:100%;background:var(--ac);transition:width .2s}
+.opt{display:block;width:100%;text-align:left;padding:12px 14px;margin:8px 0;border-radius:10px;border:1px solid var(--bd);background:var(--card)}
+@media(hover:hover){.opt:not(:disabled):hover{border-color:var(--ac)}}.opt:not(:disabled):active{border-color:var(--ac);transform:scale(.99)}.opt{min-height:52px;font-size:1rem;line-height:1.35;padding:14px 16px}
+.opt.ok{background:var(--okb);border-color:var(--ok);color:var(--ok)}.opt.bad{background:var(--erb);border-color:var(--er);color:var(--er)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.score{font-size:2.4rem;font-weight:700;color:var(--ac)}
+.rev{border-left:3px solid var(--er);padding:4px 12px;margin:12px 0}.rev .a{color:var(--ok)}.rev .w{color:var(--er)}
+input[type=range]{height:40px;margin:4px 0}
+.tab{min-height:48px;font-size:1rem}.btn{min-height:48px;font-size:1rem}.btn:active{opacity:.85}
+h2{line-height:1.35}
+#nx{position:sticky;bottom:0;margin:16px -14px 0;padding:12px 14px calc(12px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:1px solid var(--bd)}
+#nx span{display:none}#nx .btn{width:100%}
+.topics{grid-template-columns:1fr}
+@media(min-width:640px){main{padding:28px 20px 48px}.topics{grid-template-columns:1fr 1fr}.btn{min-width:160px}#nx{position:static;border:0;padding:0;margin:16px 0 0;background:none}#nx span{display:inline}#nx .btn{width:auto}h1{font-size:1.9rem}}
+@media(max-width:380px){h1{font-size:1.35rem}h2{font-size:1.1rem}.score{font-size:2rem}.opt,.topic{padding-left:12px;padding-right:12px}}
+@media(max-width:480px){#fa .btn{flex:1 1 100%}}
+@media(max-height:480px) and (orientation:landscape){#nx{position:static;border:0;padding:0}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+[hidden]{display:none!important}
+</style></head><body><main id="app"></main>
+<script>
+const T=["Защита от негативных воздействий ЧС","ЧС природного характера","ЧС техногенного характера","Бесконфликтное общение","Первичные средства пожаротушения","Средства индивидуальной защиты","Первая помощь при кровотечениях","Первая помощь при травмах","Искусственное дыхание"];
+// формат: [тема, вопрос, правильный, неверный×3]
+const Q=[
+[0,"Какие факторы в определённых условиях приводят к травмам или внезапным резким нарушениям здоровья?","Опасные","Вредные","Комфортные","Допустимые"],
+[0,"Как называется взаимодействие в системе «человек — среда обитания», при котором потоки не вредят здоровью, но вызывают дискомфорт?","Допустимое","Комфортное","Опасное","Оптимальное"],
+[0,"Через какие потоки человек взаимодействует со средой обитания?","Вещества, энергии и информации","Только вещества и воды","Только энергии","Времени и пространства"],
+[0,"Какой номер имеет Федеральный закон «О защите населения и территорий от ЧС природного и техногенного характера» (1994 г.)?","№ 68-ФЗ","№ 28-ФЗ","№ 116-ФЗ","№ 547-ФЗ"],
+[0,"Что такое жизнедеятельность?","Повседневная деятельность и отдых, способ существования человека","Только производственная деятельность","Только отдых и восстановление сил","Борьба с опасностями"],
+[1,"По какой шкале оценивается интенсивность землетрясения?","12-балльной сейсмической","10-балльной","5-балльной","100-балльной"],
+[1,"Чем пользуются для энергетической классификации землетрясений?","Магнитудой","Баллами","Амплитудой маятника","Силой ветра"],
+[1,"Землетрясения какой силы считаются разрушительными?","8 баллов и более","1–4 балла","5–7 баллов","Только 12 баллов"],
+[1,"Какой запас воды рекомендуется в «тревожной сумке» на человека?","1,5–2 л в сутки на три дня","0,5 л на сутки","10 л на неделю","Вода не нужна, достаточно консервов"],
+[1,"Что относится к косвенным признакам-предвестникам землетрясения?","Изменение уровня воды в колодцах и скважинах","Появление радуги","Усиление ветра","Падение курса валют"],
+[2,"Как нужно вести себя в автомобиле при неизбежной аварии?","Не выскакивать на ходу, напрячь мышцы, упереться руками и ногами","Быстро выпрыгнуть из машины","Расслабить все мышцы","Отстегнуть ремень и лечь на сиденье"],
+[2,"Во сколько раз пристёгнутые ремни снижают вероятность гибели при опрокидывании автомобиля?","В 5 раз","В 2 раза","В 10 раз","Не снижают"],
+[2,"Какое место в автомобиле считается наиболее опасным для пассажира?","Рядом с водителем","Заднее сиденье","Позади водителя","Все одинаково"],
+[2,"Что нужно сделать при погружении автомобиля в воду?","Открыть окна, не открывать двери сразу","Сразу открыть двери","Ждать на сиденье спасателей","Закрыть окна и вдохнуть воздух"],
+[2,"Когда можно извлекать раненых из машины до приезда спасателей?","Только если машина загорелась","Всегда, чем быстрее, тем лучше","Никогда","Только если они в сознании"],
+[3,"Какова формула конфликта?","Истинная причина + повод","Повод + эмоции","Противоречие − уступка","Причина × время"],
+[3,"На сколько видов делят конфликты в пособии?","На пять","На два","На три","На семь"],
+[3,"Как называется конфликт между двумя людьми?","Межличностный","Личностный","Групповой","Межгрупповой"],
+[3,"Как называется конфликт «внутри» одного человека?","Внутренний","Личностный","Межличностный","Групповой"],
+[3,"В сравнении конфликта с айсбергом видимая часть — это...","Повод","Истинная причина","Последствия","Участники"],
+[4,"Почему нельзя тушить сырым песком электроустановки под напряжением?","Сырой песок проводит ток","Песок воспламеняется","Песок не охлаждает","Песок слишком тяжёлый"],
+[4,"Какие огнетушители применяют для электроустановок под током?","Углекислотные (ОУ)","Водные","Воздушно-пенные (ОВП)","Химические пенные"],
+[4,"С какой скоростью распространяется пожар в зданиях с коридорной планировкой?","До 5 м/мин","До 0,1 м/мин","До 100 м/мин","До 1 м/ч"],
+[4,"Что такое горение?","Реакция окисления горючего вещества с выделением тепла, дыма и пламени","Любое нагревание вещества","Реакция восстановления","Испарение жидкости"],
+[4,"В каком диапазоне температур эксплуатируют воздушно-пенные огнетушители?","От 5 до 50 °С","От −40 до 0 °С","От 50 до 100 °С","От −10 до 5 °С"],
+[5,"Как делятся противогазы по типу защиты?","Фильтрующие, изолирующие, шланговые","Лёгкие, средние, тяжёлые","Военные и гражданские","Детские и взрослые"],
+[5,"Какова первая реакция по команде «Газы!»?","Закрыть глаза и задержать дыхание","Достать противогаз и сразу надеть","Бежать в укрытие","Закрыть рот рукой"],
+[5,"Для чего служит обтюратор в противогазе ГП-7?","Для герметизации и снижения давления лицевой части на голову","Для фильтрации воздуха","Для питья","Для переговорного устройства"],
+[5,"С какого расстояния подаётся воздух в шланговых противогазах?","10–40 м","1–2 м","100–200 м","Из баллона на спине"],
+[5,"Какая модель гражданского противогаза совершеннее?","ГП-7","ГП-5","ПМК","ИП-4"],
+[6,"Как выглядит артериальное кровотечение?","Ярко-алая кровь бьёт пульсирующей струёй","Тёмная кровь вытекает медленно","Кровь сочится по всей поверхности","Кровь вытекает без цвета"],
+[6,"Где прижимают артерию на конечности для остановки кровотечения?","Выше места повреждения","Ниже места повреждения","Прямо на ране","Не прижимают"],
+[6,"На какое максимальное время накладывают жгут в холодное время года?","Не более 1 часа","Не более 2 часов","Не более 4 часов","Не более 15 минут"],
+[6,"Потеря какой доли объёма крови считается смертельной?","Более 30 %","10–15 %","5 %","Около 20 %"],
+[6,"Какой процент пострадавших с тяжёлыми травмами погибает при задержке помощи на 1 час?","30 %","10 %","60 %","90 %"],
+[7,"Что относится к закрытым травмам?","Ушибы, растяжения, вывихи","Ожоги","Колотые раны","Открытые переломы"],
+[7,"Какие повязки останавливают венозное или капиллярное кровотечение?","Давящие","Простые","Иммобилизирующие","Корригирующие"],
+[7,"Как поступить, если из раны выпали внутренние органы?","Не вправлять, это делает только врач","Аккуратно вправить обратно","Засыпать порошком","Смазать мазью"],
+[7,"Какой бинт используют для перевязки пальцев кисти и стопы?","Узкий (3–7 см)","Средний (10–12 см)","Широкий (14–16 см)","Любой"],
+[7,"В каком направлении делают повязку?","Слева направо и снизу вверх","Справа налево и сверху вниз","Только по кругу","Как удобно"],
+[8,"Сколько кислорода содержит выдыхаемый человеком воздух?","16,3 %","20,94 %","4 %","0,03 %"],
+[8,"В каком случае проводят искусственное дыхание?","Когда отсутствует естественное дыхание","Когда человек кашляет","При лёгком головокружении","Только при остановке сердца"],
+[8,"Какая частота дыхания указана для способа «изо рта в рот»?","12–20 раз в минуту","2–4 раза в минуту","30–40 раз в минуту","1 раз в минуту"],
+[8,"Где происходит газообмен в лёгких?","В альвеолах","В трахее","В гортани","В бронхах"],
+[8,"В чём назначение искусственного дыхания?","Насытить кровь кислородом и удалить углекислый газ","Согреть пострадавшего","Остановить кровотечение","Снять боль"]
+];
+const $=s=>document.querySelector(s),app=$("#app"),MAX=5;
+let mode="topic",per=5,run=null;
+const sh=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+function home(){scrollTo(0,0);
+ app.innerHTML=`<h1>Квиз по БЖД</h1><div class="mu">По учебнику «Безопасность жизнедеятельности. Практикум», 9 практических занятий</div>
+ <div class="tabs"><button class="tab ${mode=="topic"?"on":""}" data-m="topic">По темам</button><button class="tab ${mode=="exam"?"on":""}" data-m="exam">Общий экзамен</button></div>
+ <div class="card"><div class="row"><b>Вопросов на тему</b><b id="pv">${per}</b></div><input id="rg" type="range" min="1" max="${MAX}" value="${per}"><div class="mu" id="hint"></div></div>
+ <div id="tp" class="topics" ${mode=="exam"?"hidden":""}>${T.map((t,i)=>`<button class="topic" data-t="${i}"><b>${i+1}</b>${t}</button>`).join("")}</div>
+ <div ${mode=="topic"?"hidden":""} id="ex"><button class="btn" id="go">Начать экзамен</button></div>`;
+ const hint=()=>$("#hint").textContent=mode=="exam"?`Всего в экзамене: ${per*9} вопросов, темы перемешаны`:`Тема откроется с ${per} вопросами`;
+ hint();
+ $("#rg").oninput=e=>{per=+e.target.value;$("#pv").textContent=per;hint()};
+ document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{mode=b.dataset.m;home()});
+ document.querySelectorAll(".topic").forEach(b=>b.onclick=()=>start([+b.dataset.t]));
+ $("#go").onclick=()=>start([0,1,2,3,4,5,6,7,8]);
+}
+function start(ts){
+ let qs=[];ts.forEach(t=>qs.push(...sh(Q.filter(q=>q[0]==t)).slice(0,per)));
+ run={qs:sh(qs).map(q=>({q,o:sh(q.slice(2).map((x,i)=>({x,c:i==0})))})),i:0,wrong:[],sel:null};
+ ask();
+}
+function ask(){scrollTo(0,0);
+ const r=run,it=r.qs[r.i];
+ app.innerHTML=`<div class="row mu"><span>Вопрос ${r.i+1} из ${r.qs.length}</span><span>${T[it.q[0]]}</span></div>
+ <div class="bar"><i style="width:${r.i/r.qs.length*100}%"></i></div>
+ <h2>${it.q[1]}</h2><div id="os">${it.o.map((o,k)=>`<button class="opt" data-k="${k}">${o.x}</button>`).join("")}</div>
+ <div id="nx" hidden class="row" style="margin-top:12px"><span></span><button class="btn" id="nb">${r.i+1<r.qs.length?"Далее":"Результат"}</button></div>`;
+ document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+  const k=+b.dataset.k,good=it.o[k].c;
+  document.querySelectorAll(".opt").forEach((e,j)=>{e.disabled=true;if(it.o[j].c)e.classList.add("ok")});
+  if(!good){b.classList.add("bad");r.wrong.push({it,pick:it.o[k].x})}
+  $("#nx").hidden=false;$("#nb").focus({preventScroll:true});
+ });
+ $("#nb").onclick=()=>{r.i++;r.i<r.qs.length?ask():fin()};
+}
+function fin(){scrollTo(0,0);
+ const r=run,n=r.qs.length,ok=n-r.wrong.length,p=Math.round(ok/n*100);
+ const g=p>=85?"Отлично":p>=65?"Хорошо":p>=50?"Удовлетворительно":"Нужно повторить";
+ app.innerHTML=`<h1>Результат</h1><div class="card"><div class="score">${ok} / ${n}</div><div>${p}% — ${g}</div></div>
+ <div id="fa" class="row" style="gap:8px;justify-content:flex-start"><button class="btn" id="again">Заново</button>${r.wrong.length?`<button class="btn sec" id="rw">Повторить ошибки</button>`:""}<button class="btn sec" id="hm">В меню</button></div>
+ ${r.wrong.length?`<h2 style="margin-top:24px">Разбор ошибок</h2>`+r.wrong.map(w=>`<div class="rev"><div>${w.it.q[1]}</div><div class="w">Ваш ответ: ${w.pick}</div><div class="a">Верно: ${w.it.q[2]}</div></div>`).join(""):""}`;
+ $("#hm").onclick=home;
+ $("#again").onclick=()=>{const q=r.qs.map(x=>x.q);run={qs:sh(q).map(q=>({q,o:sh(q.slice(2).map((x,i)=>({x,c:i==0})))})),i:0,wrong:[]};ask()};
+ if(r.wrong.length)$("#rw").onclick=()=>{const q=r.wrong.map(x=>x.it.q);run={qs:sh(q).map(q=>({q,o:sh(q.slice(2).map((x,i)=>({x,c:i==0})))})),i:0,wrong:[]};ask()};
+}
+home();
+</script></body></html>
